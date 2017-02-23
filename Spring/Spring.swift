@@ -170,7 +170,15 @@ public class Spring : NSObject {
         if let animation = AnimationPreset(rawValue: animation) {
             switch animation {
             case .SlideLeft:
-                x = 300*force
+                let animation = CAKeyframeAnimation()
+                animation.keyPath = "position.x"
+                animation.values = [0, -20*force, -40*force, -60*force, -80*force, -80*force]
+                animation.keyTimes = [0, 0.15, 0.3, 0.45, 0.6, 1]
+                animation.duration = CFTimeInterval(duration)
+                animation.isAdditive = true
+                animation.repeatCount = repeatCount
+                animation.beginTime = CACurrentMediaTime() + CFTimeInterval(delay)
+                layer.add(animation, forKey: "slideLeft")
             case .SlideRight:
                 x = -300*force
             case .SlideDown:
